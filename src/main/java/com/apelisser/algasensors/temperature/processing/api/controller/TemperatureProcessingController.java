@@ -2,8 +2,10 @@ package com.apelisser.algasensors.temperature.processing.api.controller;
 
 import com.apelisser.algasensors.temperature.processing.common.IdGenerator;
 import com.apelisser.algasensors.temperature.processing.api.model.TemperatureLogOutput;
+import com.apelisser.algasensors.temperature.processing.infrastructure.rabbitmq.RabbitMQConfig;
 import io.hypersistence.tsid.TSID;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,12 @@ import java.time.OffsetDateTime;
 @RestController
 @RequestMapping("/api/sensors/{sensorId}/temperatures/data")
 public class TemperatureProcessingController {
+
+    private final RabbitTemplate rabbitTemplate;
+
+    public TemperatureProcessingController(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE)
     public void process(@PathVariable TSID sensorId, @RequestBody String input) {
@@ -41,6 +49,12 @@ public class TemperatureProcessingController {
             .build();
 
         log.info(logOutput.toString());
+
+        String exchange = RabbitMQConfig.FANOUT_EXCHANGE_NAME;
+        String routingKey = "";
+        Object payload = logOutput;
+
+        rabbitTemplate.convertAndSend(exchange, routingKey, payload);
     }
 
 }
