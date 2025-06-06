@@ -1,6 +1,6 @@
 package com.apelisser.algasensors.temperature.processing.api.controller;
 
-import com.apelisser.algasensors.temperature.processing.IdGenerator;
+import com.apelisser.algasensors.temperature.processing.common.IdGenerator;
 import com.apelisser.algasensors.temperature.processing.api.model.TemperatureLogOutput;
 import io.hypersistence.tsid.TSID;
 import lombok.extern.slf4j.Slf4j;

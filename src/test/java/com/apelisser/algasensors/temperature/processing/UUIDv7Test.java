@@ -1,5 +1,7 @@
 package com.apelisser.algasensors.temperature.processing;
 
+import com.apelisser.algasensors.temperature.processing.common.IdGenerator;
+import com.apelisser.algasensors.temperature.processing.common.UUIDv7Utils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
