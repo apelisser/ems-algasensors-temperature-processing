@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String FANOUT_EXCHANGE_NAME = "temperature-processing.temperature-received.v1.e";
+    public static final String FANOUT_EXCHANGE_NAME = "temperature-monitoring.process-temperature.v1.e";
 
     @Bean
     public Jackson2JsonMessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper) {
